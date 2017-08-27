@@ -18,25 +18,18 @@ public class MatrixUtil {
         final int matrixSize = matrixA.length;
         final int[][] matrixC = new int[matrixSize][matrixSize];
         final List<Future<?>> futureList = new ArrayList<>();
-        final int[][] matrixT = new int[matrixSize][matrixSize];
-        for (int i = 0; i < matrixSize; i++) {
 
-            for (int j = 0; j < matrixSize; j++) {
-                matrixT[j][i] = matrixB[i][j];
-            }
-        }
         for (int i = 0; i < matrixSize; i++) {
+            final int[] rowC = matrixC[i];
+            final int[] rowA = matrixA[i];
 
-            final int m = i;
             futureList.add(executor.submit(() -> {
-
                 for (int j = 0; j < matrixSize; j++) {
-                    int[] rowA = matrixA[m];
-                    int s = 0;
+                    final int a = rowA[j];
+                    final int[] rowB = matrixB[j];
                     for (int k = 0; k < matrixSize; k++) {
-                        s += rowA[k] * matrixT[j][k];
+                        rowC[k] += a * rowB[k];
                     }
-                    matrixC[m][j] = s;
                 }
             }));
         }
