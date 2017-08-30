@@ -21,6 +21,13 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
+                <xs:element name="Projects">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                            <xs:element ref="Project"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
             </xs:all>
         </xs:complexType>
     </xs:element>
@@ -28,13 +35,32 @@
     <xs:element name="User">
         <xs:complexType>
             <xs:sequence>
-                <xs:element type="xs:string" name="email"/>
                 <xs:element type="xs:string" name="fullName"/>
+                <xs:element name="group-ref" type="xs:IDREFS"/>
             </xs:sequence>
+            <xs:attribute type="emailType" name="email"/>
             <xs:attribute type="flagType" name="flag" use="required"/>
             <xs:attribute type="xs:IDREF" name="city" use="required"/>
         </xs:complexType>
     </xs:element>
+
+    <xs:element name="Project">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Group" minOccurs="1" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element type="xs:string" name="fullName"/>
+                        </xs:sequence>
+                        <xs:attribute type="xs:ID" name="groupId" use="required"/>
+                        <xs:attribute type="groupStateType" name="state" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="identifier" type="xs:ID" use="required"/>
+        </xs:complexType>
+    </xs:element>
+
 
     <xs:simpleType name="flagType">
         <xs:restriction base="xs:string">
@@ -53,4 +79,19 @@
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
+
+    <xs:simpleType name="emailType">
+        <xs:restriction base="xs:token">
+            <xs:maxLength value="254"/>
+            <xs:pattern value="[_\-a-zA-Z0-9\.\+]+@[a-zA-Z0-9](\.?[\-a-zA-Z0-9]*[a-zA-Z0-9])*"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="groupStateType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="REGISTERING"/>
+            <xs:enumeration value="CURRENT"/>
+            <xs:enumeration value="FINISHED"/>
+        </xs:restriction>
+    </xs:simpleType>
 </xs:schema>
