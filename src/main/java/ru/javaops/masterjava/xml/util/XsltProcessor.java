@@ -19,6 +19,10 @@ public class XsltProcessor {
         this(new BufferedReader(new InputStreamReader(xslInputStream, StandardCharsets.UTF_8)));
     }
 
+    public void setParams(String name, String value) {
+        xformer.setParameter(name, value);
+    }
+
     public XsltProcessor(Reader xslReader) {
         try {
             Templates template = FACTORY.newTemplates(new StreamSource(xslReader));

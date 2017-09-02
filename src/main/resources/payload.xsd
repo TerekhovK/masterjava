@@ -7,6 +7,13 @@
     <xs:element name="Payload">
         <xs:complexType>
             <xs:all>
+                <xs:element name="Projects">
+                    <xs:complexType>
+                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                            <xs:element ref="Project"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="Cities">
                     <xs:complexType>
                         <xs:sequence minOccurs="1" maxOccurs="unbounded">
@@ -21,23 +28,17 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="Projects">
-                    <xs:complexType>
-                        <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                            <xs:element ref="Project"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+
             </xs:all>
         </xs:complexType>
     </xs:element>
 
     <xs:element name="User">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element type="xs:string" name="fullName"/>
+            <xs:all>
                 <xs:element name="group-ref" type="xs:IDREFS"/>
-            </xs:sequence>
+                <xs:element type="xs:string" name="fullName"/>
+            </xs:all>
             <xs:attribute type="emailType" name="email"/>
             <xs:attribute type="flagType" name="flag" use="required"/>
             <xs:attribute type="xs:IDREF" name="city" use="required"/>
